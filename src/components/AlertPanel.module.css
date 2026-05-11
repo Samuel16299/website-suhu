@@ -1,0 +1,111 @@
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.statusBadge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 14px;
+  border: 1px solid;
+}
+
+.normal { color: var(--accent-green); border-color: rgba(0,255,157,0.3); background: rgba(0,255,157,0.07); }
+.warm   { color: var(--accent-yellow); border-color: rgba(255,209,102,0.3); background: rgba(255,209,102,0.07); }
+.hot    { color: var(--accent-orange); border-color: rgba(255,107,53,0.3); background: rgba(255,107,53,0.07); }
+.danger { color: var(--accent-red); border-color: rgba(255,61,90,0.3); background: rgba(255,61,90,0.07); }
+.cold   { color: var(--accent-cyan); border-color: rgba(0,229,255,0.3); background: rgba(0,229,255,0.07); }
+
+.alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid;
+  transition: opacity 0.3s;
+}
+
+.alert.ok {
+  background: rgba(0, 255, 157, 0.05);
+  border-color: rgba(0, 255, 157, 0.15);
+}
+.alert.warning {
+  background: rgba(255, 209, 102, 0.05);
+  border-color: rgba(255, 209, 102, 0.2);
+}
+.alert.danger {
+  background: rgba(255, 61, 90, 0.07);
+  border-color: rgba(255, 61, 90, 0.3);
+  animation: alertPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes alertPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 61, 90, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(255, 61, 90, 0.1); }
+}
+
+.pulse {
+  animation: flashUpdate 0.4s ease;
+}
+
+@keyframes flashUpdate {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.alertIcon { font-size: 0.9rem; }
+.alertMsg  { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.4; }
+
+.thresholds {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.threshTitle {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.threshRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.threshVal {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
