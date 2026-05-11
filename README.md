@@ -1,16 +1,16 @@
-# 🌡️ ThermoSense — Monitor Suhu IoT ESP32
+# ThermoSense — Monitor Suhu IoT ESP32
 
 Dashboard monitoring suhu dan kelembaban real-time yang dibangun dengan **React + Vite**, dirancang untuk diintegrasikan dengan perangkat **ESP32** menggunakan sensor **DHT22**.
 
 ---
 
-## 📸 Tampilan
+## Tampilan
 
 > Dashboard menampilkan gauge suhu interaktif, grafik riwayat data, status perangkat ESP32, dan panel peringatan otomatis.
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## Teknologi yang Digunakan
 
 | Teknologi | Keterangan |
 |-----------|------------|
@@ -23,7 +23,7 @@ Dashboard monitoring suhu dan kelembaban real-time yang dibangun dengan **React 
 
 ---
 
-## 📁 Struktur Proyek
+## Struktur Proyek
 
 ```
 website-suhu/
@@ -55,7 +55,7 @@ website-suhu/
 
 ---
 
-## 🚀 Cara Menjalankan
+## Cara Menjalankan
 
 ### Prasyarat
 
@@ -221,7 +221,7 @@ function useESP32Data() {
 
 ---
 
-## ⚙️ Konfigurasi
+## Konfigurasi
 
 ### Mengubah Interval Polling
 
@@ -247,7 +247,7 @@ if (humidity < 30) { /* terlalu kering */ }
 
 ---
 
-## 🎨 Kustomisasi Tema
+## Kustomisasi Tema
 
 Semua warna tema tersedia sebagai CSS variables di `App.css`:
 
@@ -264,7 +264,7 @@ Semua warna tema tersedia sebagai CSS variables di `App.css`:
 
 ---
 
-## 📊 Rentang Status Suhu
+## Rentang Status Suhu
 
 | Rentang | Status | Warna |
 |---------|--------|-------|
@@ -276,7 +276,7 @@ Semua warna tema tersedia sebagai CSS variables di `App.css`:
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Sensor terbaca `NaN`
 - Pastikan kabel data DHT22 terhubung ke pin yang benar
@@ -307,15 +307,3 @@ export default {
 - ESP32 hanya mendukung jaringan 2.4 GHz (bukan 5 GHz)
 
 ---
-
-## 📄 Lisensi
-
-MIT License — bebas digunakan dan dimodifikasi.
-
----
-
-## 👤 Author
-
-Dibuat dengan ❤️ menggunakan React + ESP32
-
-> Untuk pertanyaan atau kontribusi, silakan buka *Issue* atau *Pull Request*.
