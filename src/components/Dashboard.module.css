@@ -192,3 +192,14 @@
   }
   .colRight { flex-direction: column; }
 }
+.light .clockTime,
+.light .clockDate {
+  color: #ffffff !important;
+}
+:global(.light) .clockTime {
+  color: #ffffff !important;
+}
+
+:global(.light) .clockDate {
+  color: #ffffff !important;
+}

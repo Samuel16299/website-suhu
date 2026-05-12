@@ -11,14 +11,14 @@ import styles from "./Dashboard.module.css";
 function getTemperatureStatus(temp) {
   if (temp === null || temp === undefined)
     return { label: "Menunggu...", color: "var(--text-muted)", level: "waiting" };
-  if (temp < 20) return { label: "Dingin", color: "var(--accent-cyan)", level: "cold" };
-  if (temp < 25) return { label: "Normal", color: "var(--accent-green)", level: "normal" };
-  if (temp < 32) return { label: "Hangat", color: "var(--accent-yellow)", level: "warm" };
-  if (temp < 38) return { label: "Panas", color: "var(--accent-orange)", level: "hot" };
-  return { label: "Bahaya!", color: "var(--accent-red)", level: "danger" };
+  if (temp < 20) return { label: "Dingin",   color: "var(--accent-cyan)",   level: "cold"   };
+  if (temp < 25) return { label: "Normal",   color: "var(--accent-green)",  level: "normal" };
+  if (temp < 32) return { label: "Hangat",   color: "var(--accent-yellow)", level: "warm"   };
+  if (temp < 38) return { label: "Panas",    color: "var(--accent-orange)", level: "hot"    };
+  return           { label: "Bahaya!",  color: "var(--accent-red)",    level: "danger" };
 }
 
-export default function Dashboard() {
+export default function Dashboard({ isDark }) {
   const { connected, connecting, error, sensorData, reconnect } = useMQTT();
   const { temperature, humidity, heatIndex, rssi, ip, uptime, lastUpdate, history } = sensorData;
   const status = getTemperatureStatus(temperature);
@@ -29,13 +29,12 @@ export default function Dashboard() {
     return () => clearInterval(t);
   }, []);
 
-  const fmt = (d) => d.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-  const fmtDate = (d) =>
-    d.toLocaleDateString("id-ID", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+  const fmt     = (d) => d.toLocaleTimeString("id-ID",   { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  const fmtDate = (d) => d.toLocaleDateString("id-ID",   { weekday: "long", year: "numeric", month: "long", day: "numeric" });
 
   const tempDisplay = temperature !== null ? `${temperature}°C` : "—";
-  const humDisplay = humidity !== null ? `${humidity}%` : "—";
-  const hiDisplay = heatIndex !== null ? `${heatIndex}°C` : "—";
+  const humDisplay  = humidity    !== null ? `${humidity}%`     : "—";
+  const hiDisplay   = heatIndex   !== null ? `${heatIndex}°C`   : "—";
 
   return (
     <div className={styles.wrapper}>
@@ -53,10 +52,12 @@ export default function Dashboard() {
           </div>
           <div className={styles.headerTag}>ESP32 · Wokwi · MQTT</div>
         </div>
+
         <div className={styles.headerCenter}>
-          <div className={styles.clockTime}>{fmt(now)}</div>
-          <div className={styles.clockDate}>{fmtDate(now)}</div>
+          <div className={styles.clockTime} style={{ color: "#ffffff" }}>{fmt(now)}</div>
+          <div className={styles.clockDate} style={{ color: "rgba(255,255,255,0.6)" }}>{fmtDate(now)}</div>
         </div>
+
         <div className={styles.headerRight}>
           <div className={`${styles.connBadge} ${connected ? styles.connected : styles.disconnected}`}>
             <span className={styles.connDot}></span>
@@ -65,10 +66,10 @@ export default function Dashboard() {
           {rssi !== null && (
             <div className={styles.rssi}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <rect x="1" y="11" width="2" height="4" rx="1" fill={rssi > -70 ? "var(--accent-cyan)" : "var(--text-muted)"} />
-                <rect x="5" y="8" width="2" height="7" rx="1" fill={rssi > -65 ? "var(--accent-cyan)" : "var(--text-muted)"} />
-                <rect x="9" y="5" width="2" height="10" rx="1" fill={rssi > -60 ? "var(--accent-cyan)" : "var(--text-muted)"} />
-                <rect x="13" y="2" width="2" height="13" rx="1" fill={rssi > -55 ? "var(--accent-cyan)" : "var(--text-muted)"} />
+                <rect x="1"  y="11" width="2" height="4"  rx="1" fill={rssi > -70 ? "var(--accent-cyan)" : "var(--text-muted)"} />
+                <rect x="5"  y="8"  width="2" height="7"  rx="1" fill={rssi > -65 ? "var(--accent-cyan)" : "var(--text-muted)"} />
+                <rect x="9"  y="5"  width="2" height="10" rx="1" fill={rssi > -60 ? "var(--accent-cyan)" : "var(--text-muted)"} />
+                <rect x="13" y="2"  width="2" height="13" rx="1" fill={rssi > -55 ? "var(--accent-cyan)" : "var(--text-muted)"} />
               </svg>
               <span>{rssi} dBm</span>
             </div>
@@ -80,14 +81,14 @@ export default function Dashboard() {
 
       <main className={styles.main}>
         <div className={styles.colLeft}>
-          <TemperatureGauge temperature={temperature ?? 0} status={status} noData={temperature === null} />
+          <TemperatureGauge temperature={temperature ?? 0} status={status} noData={temperature === null} isDark={isDark} />
           <AlertPanel temperature={temperature} humidity={humidity} status={status} />
         </div>
         <div className={styles.colCenter}>
           <div className={styles.statsRow}>
-            <StatusCard label="Suhu" value={tempDisplay} sub="Celsius" icon="🌡️" color={status.color} glow />
-            <StatusCard label="Kelembaban" value={humDisplay} sub="Relatif" icon="💧" color="var(--accent-blue)" />
-            <StatusCard label="Heat Index" value={hiDisplay} sub="Terasa seperti" icon="🔥" color="var(--accent-orange)" />
+            <StatusCard label="Suhu"       value={tempDisplay} sub="Celsius"       icon="🌡️" color={status.color}           glow />
+            <StatusCard label="Kelembaban" value={humDisplay}  sub="Relatif"       icon="💧" color="var(--accent-blue)"          />
+            <StatusCard label="Heat Index" value={hiDisplay}   sub="Terasa seperti" icon="🔥" color="var(--accent-orange)"        />
           </div>
           <ChartHistory history={history} />
         </div>
