@@ -51,7 +51,7 @@ export default function Dashboard() {
             </svg>
             <span className={styles.logoText}>ThermoSense</span>
           </div>
-          <div className={styles.headerTag}>ESP32 · Wokwi · MQTT</div>
+          <div className={styles.headerTag}>ESP32 · MQTT</div>
         </div>
         <div className={styles.headerCenter}>
           <div className={styles.clockTime}>{fmt(now)}</div>
