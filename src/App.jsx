@@ -11,8 +11,8 @@ function App() {
         onClick={() => setDarkMode(!darkMode)}
         style={{
           position: "fixed",
-          top: "58px",
-          right: "320px",
+          bottom: "5px",
+          right: "190px",
           zIndex: 999,
           width: "60px",
           height: "60px",
