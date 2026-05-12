@@ -29,7 +29,6 @@ function buildArea(points, width, height, minVal, maxVal) {
 export default function ChartHistory({ history }) {
   const W = 600, H = 120;
 
-  // ── Guard: tampilkan placeholder saat data belum ada ──────────
   const hasData = history.length >= 2;
 
   const temps = hasData ? history.map((h) => h.temp) : [];
@@ -51,7 +50,6 @@ export default function ChartHistory({ history }) {
       .map((h) => h.time.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }));
   }, [history]);
 
-  // Koordinat live dot — hanya kalkulasi jika data tersedia
   const lastX     = hasData ? W : null;
   const lastTempY = hasData ? H - ((temps[temps.length - 1] - minT) / (maxT - minT)) * H : null;
   const lastHumY  = hasData ? H - ((hums[hums.length - 1]  - minH) / (maxH - minH)) * H : null;
@@ -92,23 +90,23 @@ export default function ChartHistory({ history }) {
             </filter>
           </defs>
 
-          {/* Grid lines — selalu tampil */}
           {[0, 0.25, 0.5, 0.75, 1].map((v, i) => (
             <line key={i} x1="0" y1={v * H} x2={W} y2={v * H}
-              stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
+              stroke="rgba(100,120,150,0.15)" strokeWidth="1" />
           ))}
 
           {!hasData && (
             <>
-              {/* Placeholder garis putus-putus */}
               <line x1="0" y1={H / 2} x2={W} y2={H / 2}
-                stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="6 4" />
+                stroke="rgba(100,120,150,0.25)" strokeWidth="1" strokeDasharray="6 4" />
               <text x={W / 2} y={H / 2 - 12} textAnchor="middle"
-                fill="rgba(255,255,255,0.2)" fontSize="12" fontFamily="Space Mono, monospace">
+                className={styles.placeholderText}
+                fontSize="12" fontFamily="Space Mono, monospace">
                 Menunggu data dari ESP32...
               </text>
               <text x={W / 2} y={H / 2 + 14} textAnchor="middle"
-                fill="rgba(255,255,255,0.12)" fontSize="10" fontFamily="Space Mono, monospace">
+                className={styles.placeholderTextSub}
+                fontSize="10" fontFamily="Space Mono, monospace">
                 Butuh minimal 2 sampel
               </text>
             </>
@@ -121,27 +119,23 @@ export default function ChartHistory({ history }) {
                 strokeWidth="1.5" strokeOpacity="0.6" strokeDasharray="4 3" />
               <path d={tempPath} fill="none" stroke="var(--accent-cyan)"
                 strokeWidth="2" filter="url(#lineGlow)" />
-              {/* Live dot — temp */}
               <circle cx={lastX} cy={lastTempY} r="4" fill="var(--accent-cyan)" />
               <circle cx={lastX} cy={lastTempY} r="8" fill="var(--accent-cyan)" opacity="0.2">
                 <animate attributeName="r" values="4;12;4" dur="2s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite" />
               </circle>
-              {/* Live dot — humidity */}
               <circle cx={lastX} cy={lastHumY} r="3" fill="var(--accent-blue)" />
             </>
           )}
         </svg>
       </div>
 
-      {/* Time axis */}
       <div className={styles.timeAxis}>
         {timeLabels.map((t, i) => (
           <span key={i} className={styles.timeLabel}>{t}</span>
         ))}
       </div>
 
-      {/* Stats bar */}
       <div className={styles.statsBar}>
         <div className={styles.stat}>
           <span className={styles.statLabel}>Min</span>

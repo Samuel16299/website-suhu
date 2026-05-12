@@ -8,7 +8,7 @@ export default function MQTTStatus({ connected, connecting, error, onReconnect }
       <div className={`${styles.banner} ${styles.connecting}`}>
         <div className={styles.spinner}></div>
         <span>Menghubungkan ke MQTT broker <strong>broker.hivemq.com</strong>…</span>
-        <span className={styles.hint}>Pastikan simulasi Wokwi sedang berjalan</span>
+        <span className={styles.hint}>Pastikan ESP32 sudah terhubung</span>
       </div>
     );
   }
