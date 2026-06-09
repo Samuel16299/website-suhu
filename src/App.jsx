@@ -9,24 +9,25 @@ function App() {
     <div className={darkMode ? "dark" : "light"}>
       <button
         onClick={() => setDarkMode(!darkMode)}
+        title={darkMode ? "Ganti ke mode terang" : "Ganti ke mode gelap"}
         style={{
           position: "fixed",
-          bottom: "5px",
-          right: "190px",
+          bottom: "24px",
+          right: "24px",
           zIndex: 999,
-          width: "60px",
-          height: "60px",
+          width: "44px",
+          height: "44px",
           borderRadius: "50%",
-          border: "3px solid white",
-          background: darkMode ? "#facc15" : "#1e293b",
-          color: darkMode ? "#000" : "#fff",
-          fontSize: "28px",
+          border: "1px solid var(--border-hover)",
+          background: "var(--bg-card)",
+          color: "var(--text-secondary)",
+          fontSize: "18px",
           cursor: "pointer",
-          transition: "all 0.4s ease",
+          transition: "all 0.2s ease",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: "0 0 20px rgba(0,0,0,0.4)",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
         }}
       >
         {darkMode ? "☀️" : "🌙"}

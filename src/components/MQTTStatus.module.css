@@ -1,37 +1,38 @@
 .banner {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 32px;
-  font-size: 0.78rem;
-  font-family: 'DM Sans', sans-serif;
+  gap: 10px;
+  padding: 9px 28px;
+  font-size: 0.76rem;
+  font-family: var(--font-sans);
+  border-bottom: 1px solid;
 }
 
 .connecting {
-  background: rgba(26, 111, 255, 0.08);
-  border-bottom: 1px solid rgba(26, 111, 255, 0.2);
-  color: var(--accent-blue);
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--accent);
 }
 
 .error {
-  background: rgba(255, 107, 53, 0.08);
-  border-bottom: 1px solid rgba(255, 107, 53, 0.2);
-  color: var(--accent-orange);
+  background: var(--orange-soft);
+  border-color: rgba(245, 158, 11, 0.2);
+  color: var(--orange);
 }
 
 .hint {
   margin-left: auto;
   color: var(--text-muted);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
 }
 
 .spinner {
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(26, 111, 255, 0.2);
-  border-top-color: var(--accent-blue);
+  width: 13px;
+  height: 13px;
+  border: 2px solid var(--accent-border);
+  border-top-color: var(--accent);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.75s linear infinite;
   flex-shrink: 0;
 }
 
@@ -41,16 +42,17 @@
 
 .btn {
   margin-left: auto;
-  background: rgba(255, 107, 53, 0.15);
-  border: 1px solid rgba(255, 107, 53, 0.4);
-  color: var(--accent-orange);
-  padding: 4px 14px;
-  border-radius: 8px;
+  background: var(--orange-soft);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--orange);
+  padding: 3px 12px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 0.72rem;
-  font-family: 'DM Sans', sans-serif;
-  transition: background 0.2s;
+  font-size: 0.7rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  transition: background 0.15s;
 }
 .btn:hover {
-  background: rgba(255, 107, 53, 0.25);
+  background: rgba(245, 158, 11, 0.2);
 }
