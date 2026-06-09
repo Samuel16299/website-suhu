@@ -3,11 +3,11 @@ import styles from "./AlertPanel.module.css";
 
 function getAlerts(temperature, humidity) {
   const alerts = [];
-  if (temperature >= 38) alerts.push({ type: "danger", msg: "Suhu sangat tinggi! Periksa area segera.", icon: "🚨" });
-  else if (temperature >= 32) alerts.push({ type: "warning", msg: "Suhu di atas normal, pantau terus.", icon: "⚠️" });
-  if (humidity > 85) alerts.push({ type: "warning", msg: "Kelembaban sangat tinggi (>85%).", icon: "💧" });
-  if (humidity < 30) alerts.push({ type: "warning", msg: "Kelembaban sangat rendah (<30%).", icon: "🔆" });
-  if (alerts.length === 0) alerts.push({ type: "ok", msg: "Semua parameter dalam batas normal.", icon: "✅" });
+  if (temperature >= 38) alerts.push({ type: "danger", msg: "Suhu sangat tinggi! Periksa area segera." });
+  else if (temperature >= 32) alerts.push({ type: "warning", msg: "Suhu di atas normal, pantau terus." });
+  if (humidity > 85) alerts.push({ type: "warning", msg: "Kelembaban sangat tinggi (>85%)." });
+  if (humidity < 30) alerts.push({ type: "warning", msg: "Kelembaban sangat rendah (<30%)." });
+  if (alerts.length === 0) alerts.push({ type: "ok", msg: "Semua parameter dalam batas normal." });
   return alerts;
 }
 

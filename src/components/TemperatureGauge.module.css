@@ -1,73 +1,73 @@
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 20px;
-  transition: border-color 0.3s;
-}
-.card:hover {
-  border-color: var(--border-active);
+  border-radius: var(--radius-xl);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .cardHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4px;
 }
 
 .cardTitle {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-weight: 600;
+  font-size: 0.85rem;
   color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 
 .cardSub {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--accent-cyan);
-  background: rgba(0, 229, 255, 0.08);
-  border: 1px solid rgba(0, 229, 255, 0.2);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--green);
+  background: var(--green-soft);
+  border: 1px solid rgba(52, 196, 139, 0.2);
   padding: 2px 8px;
-  border-radius: 12px;
-  animation: blink 2s ease-in-out infinite;
+  border-radius: 99px;
+  animation: liveBlink 2.5s ease-in-out infinite;
 }
 
-@keyframes blink {
+@keyframes liveBlink {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  50%       { opacity: 0.5; }
 }
 
 .gaugeWrap {
   display: flex;
   justify-content: center;
+  padding: 4px 0;
 }
 
 .svg {
   width: 100%;
-  max-width: 280px;
+  max-width: 260px;
   height: auto;
 }
 
 .ranges {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px 12px;
-  margin-top: 8px;
+  gap: 5px 10px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
 }
 
 .range {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.7rem;
-  color: var(--text-secondary);
+  font-size: 0.68rem;
+  color: var(--text-muted);
 }
 
 .rangeDot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--c);
   flex-shrink: 0;

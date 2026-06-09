@@ -11,10 +11,7 @@ function tempToAngle(temp) {
 
 function polarToXY(cx, cy, r, angleDeg) {
   const rad = ((angleDeg - 90) * Math.PI) / 180;
-  return {
-    x: cx + r * Math.cos(rad),
-    y: cy + r * Math.sin(rad),
-  };
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
 }
 
 function describeArc(cx, cy, r, startAngle, endAngle) {
@@ -31,7 +28,7 @@ export default function TemperatureGauge({ temperature, status, isDark }) {
   useEffect(() => {
     const start = displayTemp;
     const end = temperature;
-    const duration = 800;
+    const duration = 700;
     const startTime = performance.now();
     const animate = (now) => {
       const elapsed = now - startTime;
@@ -44,80 +41,61 @@ export default function TemperatureGauge({ temperature, status, isDark }) {
     return () => cancelAnimationFrame(animRef.current);
   }, [temperature]);
 
-  const cx = 150, cy = 150, r = 110;
+  const cx = 150, cy = 150, r = 108;
   const trackStart = -135, trackEnd = 135;
   const fillEnd = -135 + ((displayTemp - MIN_TEMP) / (MAX_TEMP - MIN_TEMP)) * 270;
-  const needle = polarToXY(cx, cy, r - 18, tempToAngle(displayTemp));
 
-  const getGradientId = () => {
-    if (displayTemp < 25) return "gradCold";
-    if (displayTemp < 32) return "gradWarm";
-    return "gradHot";
-  };
+  const trackBg       = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.07)";
+  const tickMajor     = isDark ? "rgba(255,255,255,0.2)"  : "rgba(0,0,0,0.2)";
+  const tickMinor     = isDark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.07)";
+  const labelFill     = isDark ? "rgba(255,255,255,0.3)"  : "rgba(0,0,0,0.4)";
+  const centerNumFill = isDark ? "#f0f2f7"                : "#111827";
+  const celsiusFill   = isDark ? "rgba(255,255,255,0.35)" : "rgba(0,0,0,0.35)";
+  const needleBg      = isDark ? "#1c2030"                : "#ffffff";
 
-  const trackBg        = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.08)";
-  const tickMajor      = isDark ? "rgba(255,255,255,0.3)"  : "rgba(0,0,0,0.3)";
-  const tickMinor      = isDark ? "rgba(255,255,255,0.1)"  : "rgba(0,0,0,0.12)";
-  const labelFill      = isDark ? "rgba(255,255,255,0.35)" : "rgba(0,0,0,0.5)";
-  const centerNumFill  = isDark ? "#ffffff"                : "#0f172a";
-  const celsiusFill    = isDark ? "rgba(255,255,255,0.4)"  : "rgba(0,0,0,0.4)";
-  const needleBg       = isDark ? "var(--bg-card)"         : "#ffffff";
+  // Color from status
+  const fillColor = status.color;
 
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
         <span className={styles.cardTitle}>Monitor Suhu</span>
-        <span className={styles.cardSub}>Real-time</span>
+        <span className={styles.cardSub}>Live</span>
       </div>
 
       <div className={styles.gaugeWrap}>
-        <svg viewBox="0 0 300 260" className={styles.svg}>
+        <svg viewBox="0 0 300 255" className={styles.svg}>
           <defs>
-            <linearGradient id="gradCold" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#00e5ff" />
-              <stop offset="100%" stopColor="#00ff9d" />
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stopColor={fillColor} stopOpacity="0.6" />
+              <stop offset="100%" stopColor={fillColor} stopOpacity="1" />
             </linearGradient>
-            <linearGradient id="gradWarm" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#00ff9d" />
-              <stop offset="100%" stopColor="#ffd166" />
-            </linearGradient>
-            <linearGradient id="gradHot" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ffd166" />
-              <stop offset="100%" stopColor="#ff3d5a" />
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
           </defs>
 
-          <circle cx={cx} cy={cy} r={r + 14} fill="none" stroke="rgba(0,229,255,0.05)" strokeWidth="1" />
-          <circle cx={cx} cy={cy} r={r + 8}  fill="none" stroke="rgba(0,229,255,0.08)" strokeWidth="1" />
-
+          {/* Track background */}
           <path
             d={describeArc(cx, cy, r, trackStart, trackEnd)}
             fill="none"
             stroke={trackBg}
-            strokeWidth="14"
+            strokeWidth="12"
             strokeLinecap="round"
           />
 
+          {/* Filled arc */}
           <path
-            d={describeArc(cx, cy, r, trackStart, Math.max(trackStart + 1, fillEnd))}
+            d={describeArc(cx, cy, r, trackStart, Math.max(trackStart + 0.5, fillEnd))}
             fill="none"
-            stroke={`url(#${getGradientId()})`}
-            strokeWidth="14"
+            stroke={fillColor}
+            strokeWidth="12"
             strokeLinecap="round"
-            filter="url(#glow)"
+            opacity="0.9"
           />
 
+          {/* Tick marks */}
           {Array.from({ length: 11 }, (_, i) => {
             const angle = -135 + i * 27;
-            const inner = polarToXY(cx, cy, r - 22, angle);
-            const outer = polarToXY(cx, cy, r + 2,  angle);
+            const inner = polarToXY(cx, cy, r - 20, angle);
+            const outer = polarToXY(cx, cy, r + 1, angle);
             return (
               <line
                 key={i}
@@ -125,61 +103,74 @@ export default function TemperatureGauge({ temperature, status, isDark }) {
                 x2={inner.x} y2={inner.y}
                 stroke={i % 5 === 0 ? tickMajor : tickMinor}
                 strokeWidth={i % 5 === 0 ? 1.5 : 1}
+                strokeLinecap="round"
               />
             );
           })}
 
+          {/* Labels */}
           {[0, 10, 20, 30, 40, 50].map((val, i) => {
             const angle = -135 + (i / 5) * 270;
-            const pos = polarToXY(cx, cy, r - 36, angle);
+            const pos = polarToXY(cx, cy, r - 34, angle);
             return (
-              <text key={val} x={pos.x} y={pos.y} textAnchor="middle" dominantBaseline="middle"
-                fontSize="9" fill={labelFill} fontFamily="Space Mono, monospace">
+              <text key={val} x={pos.x} y={pos.y}
+                textAnchor="middle" dominantBaseline="middle"
+                fontSize="9" fill={labelFill}
+                fontFamily="JetBrains Mono, monospace">
                 {val}
               </text>
             );
           })}
 
-          <line
-            x1={cx} y1={cy}
-            x2={needle.x} y2={needle.y}
-            stroke={status.color}
-            strokeWidth="2"
-            strokeLinecap="round"
-            filter="url(#glow)"
-          />
-          <circle cx={cx} cy={cy} r="8" fill={needleBg} stroke={status.color} strokeWidth="2" />
-          <circle cx={cx} cy={cy} r="3" fill={status.color} />
+          {/* Needle */}
+          {(() => {
+            const needle = polarToXY(cx, cy, r - 16, tempToAngle(displayTemp));
+            return (
+              <>
+                <line
+                  x1={cx} y1={cy}
+                  x2={needle.x} y2={needle.y}
+                  stroke={fillColor}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  opacity="0.9"
+                />
+                <circle cx={cx} cy={cy} r="7" fill={needleBg} stroke={fillColor} strokeWidth="2" />
+                <circle cx={cx} cy={cy} r="2.5" fill={fillColor} />
+              </>
+            );
+          })()}
 
-          <text x={cx} y={cy + 42} textAnchor="middle" fontSize="38" fontWeight="700"
-            fill={centerNumFill} fontFamily="Syne, sans-serif" letterSpacing="-1">
+          {/* Center readout */}
+          <text x={cx} y={cy + 40} textAnchor="middle" fontSize="36" fontWeight="700"
+            fill={centerNumFill} fontFamily="Inter, sans-serif" letterSpacing="-1">
             {displayTemp.toFixed(1)}
           </text>
-          <text x={cx} y={cy + 64} textAnchor="middle" fontSize="14"
-            fill={celsiusFill} fontFamily="DM Sans, sans-serif">
+          <text x={cx} y={cy + 60} textAnchor="middle" fontSize="12"
+            fill={celsiusFill} fontFamily="Inter, sans-serif">
             °Celsius
           </text>
-          <text x={cx} y={cy + 86} textAnchor="middle" fontSize="11" fontWeight="600"
-            fill={status.color} fontFamily="Syne, sans-serif" letterSpacing="0.08em">
+          <text x={cx} y={cy + 80} textAnchor="middle" fontSize="10" fontWeight="600"
+            fill={fillColor} fontFamily="Inter, sans-serif" letterSpacing="0.05em">
             {status.label.toUpperCase()}
           </text>
         </svg>
       </div>
 
       <div className={styles.ranges}>
-        <div className={styles.range} style={{ "--c": "var(--accent-cyan)" }}>
+        <div className={styles.range} style={{ "--c": "var(--cyan)" }}>
           <span className={styles.rangeDot} />
           <span>Dingin &lt;20°</span>
         </div>
-        <div className={styles.range} style={{ "--c": "var(--accent-green)" }}>
+        <div className={styles.range} style={{ "--c": "var(--green)" }}>
           <span className={styles.rangeDot} />
           <span>Normal 20–25°</span>
         </div>
-        <div className={styles.range} style={{ "--c": "var(--accent-yellow)" }}>
+        <div className={styles.range} style={{ "--c": "var(--orange)" }}>
           <span className={styles.rangeDot} />
           <span>Hangat 25–32°</span>
         </div>
-        <div className={styles.range} style={{ "--c": "var(--accent-red)" }}>
+        <div className={styles.range} style={{ "--c": "var(--red)" }}>
           <span className={styles.rangeDot} />
           <span>Panas &gt;32°</span>
         </div>

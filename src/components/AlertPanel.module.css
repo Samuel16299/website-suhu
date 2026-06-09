@@ -1,11 +1,11 @@
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: var(--radius-xl);
+  padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .header {
@@ -15,97 +15,97 @@
 }
 
 .title {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 0.95rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 
 .statusBadge {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  padding: 3px 12px;
-  border-radius: 14px;
+  padding: 2px 10px;
+  border-radius: 99px;
   border: 1px solid;
 }
 
-.normal { color: var(--accent-green); border-color: rgba(0,255,157,0.3); background: rgba(0,255,157,0.07); }
-.warm   { color: var(--accent-yellow); border-color: rgba(255,209,102,0.3); background: rgba(255,209,102,0.07); }
-.hot    { color: var(--accent-orange); border-color: rgba(255,107,53,0.3); background: rgba(255,107,53,0.07); }
-.danger { color: var(--accent-red); border-color: rgba(255,61,90,0.3); background: rgba(255,61,90,0.07); }
-.cold   { color: var(--accent-cyan); border-color: rgba(0,229,255,0.3); background: rgba(0,229,255,0.07); }
+.normal  { color: var(--green);  border-color: rgba(52,196,139,0.3);  background: var(--green-soft); }
+.warm    { color: var(--orange); border-color: rgba(245,158,11,0.3);  background: var(--orange-soft); }
+.hot     { color: var(--orange); border-color: rgba(245,158,11,0.3);  background: var(--orange-soft); }
+.danger  { color: var(--red);    border-color: rgba(239,68,68,0.3);   background: var(--red-soft); }
+.cold    { color: var(--cyan);   border-color: rgba(34,211,238,0.3);  background: var(--cyan-soft); }
+.waiting { color: var(--text-muted); border-color: var(--border); background: var(--bg-muted); }
 
 .alerts {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .alert {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 10px;
+  gap: 9px;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
   border: 1px solid;
-  transition: opacity 0.3s;
+  transition: opacity 0.25s;
 }
 
 .alert.ok {
-  background: rgba(0, 255, 157, 0.05);
-  border-color: rgba(0, 255, 157, 0.15);
+  background: var(--green-soft);
+  border-color: rgba(52, 196, 139, 0.2);
 }
 .alert.warning {
-  background: rgba(255, 209, 102, 0.05);
-  border-color: rgba(255, 209, 102, 0.2);
+  background: var(--orange-soft);
+  border-color: rgba(245, 158, 11, 0.2);
 }
 .alert.danger {
-  background: rgba(255, 61, 90, 0.07);
-  border-color: rgba(255, 61, 90, 0.3);
-  animation: alertPulse 1.5s ease-in-out infinite;
+  background: var(--red-soft);
+  border-color: rgba(239, 68, 68, 0.25);
+  animation: alertPulse 2s ease-in-out infinite;
 }
 
 @keyframes alertPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 61, 90, 0); }
-  50% { box-shadow: 0 0 0 4px rgba(255, 61, 90, 0.1); }
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.07); }
 }
 
-.pulse {
-  animation: flashUpdate 0.4s ease;
-}
-
+.pulse { animation: flashUpdate 0.35s ease; }
 @keyframes flashUpdate {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  50%       { opacity: 0.6; }
 }
 
-.alertIcon { font-size: 0.9rem; }
-.alertMsg  { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.4; }
+.alertIcon { font-size: 0.85rem; line-height: 1.4; }
+.alertMsg  { font-size: 0.74rem; color: var(--text-secondary); line-height: 1.45; }
 
 .thresholds {
   border-top: 1px solid var(--border);
-  padding-top: 12px;
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .threshTitle {
-  font-size: 0.68rem;
+  font-size: 0.63rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
+  font-weight: 500;
 }
 
 .threshRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-secondary);
 }
 
 .threshVal {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
 }

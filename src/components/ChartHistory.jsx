@@ -64,11 +64,11 @@ export default function ChartHistory({ history }) {
         <div className={styles.title}>Riwayat Data</div>
         <div className={styles.legends}>
           <div className={styles.legend}>
-            <span className={styles.legendDot} style={{ background: "var(--accent-cyan)" }} />
+            <span className={styles.legendDot} style={{ background: "var(--accent)" }} />
             <span>Suhu (°C)</span>
           </div>
           <div className={styles.legend}>
-            <span className={styles.legendDot} style={{ background: "var(--accent-blue)" }} />
+            <span className={styles.legendDot} style={{ background: "var(--cyan)" }} />
             <span>Kelembaban (%)</span>
           </div>
         </div>
@@ -77,36 +77,30 @@ export default function ChartHistory({ history }) {
       <div className={styles.chartWrap}>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className={styles.svg}>
           <defs>
-            <linearGradient id="tempGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="var(--accent-cyan)" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="var(--accent-cyan)" stopOpacity="0" />
+            <linearGradient id="tempAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stopColor="var(--accent)" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
             </linearGradient>
-            <filter id="lineGlow">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
           </defs>
 
+          {/* Grid lines */}
           {[0, 0.25, 0.5, 0.75, 1].map((v, i) => (
             <line key={i} x1="0" y1={v * H} x2={W} y2={v * H}
-              stroke="rgba(100,120,150,0.15)" strokeWidth="1" />
+              stroke="rgba(148,163,184,0.08)" strokeWidth="1" />
           ))}
 
           {!hasData && (
             <>
               <line x1="0" y1={H / 2} x2={W} y2={H / 2}
-                stroke="rgba(100,120,150,0.25)" strokeWidth="1" strokeDasharray="6 4" />
+                stroke="rgba(148,163,184,0.15)" strokeWidth="1" strokeDasharray="6 4" />
               <text x={W / 2} y={H / 2 - 12} textAnchor="middle"
                 className={styles.placeholderText}
-                fontSize="12" fontFamily="Space Mono, monospace">
+                fontSize="11" fontFamily="Inter, sans-serif">
                 Menunggu data dari ESP32...
               </text>
-              <text x={W / 2} y={H / 2 + 14} textAnchor="middle"
+              <text x={W / 2} y={H / 2 + 12} textAnchor="middle"
                 className={styles.placeholderTextSub}
-                fontSize="10" fontFamily="Space Mono, monospace">
+                fontSize="9.5" fontFamily="Inter, sans-serif">
                 Butuh minimal 2 sampel
               </text>
             </>
@@ -114,17 +108,18 @@ export default function ChartHistory({ history }) {
 
           {hasData && (
             <>
-              <path d={tempArea} fill="url(#tempGrad)" />
-              <path d={humPath} fill="none" stroke="var(--accent-blue)"
-                strokeWidth="1.5" strokeOpacity="0.6" strokeDasharray="4 3" />
-              <path d={tempPath} fill="none" stroke="var(--accent-cyan)"
-                strokeWidth="2" filter="url(#lineGlow)" />
-              <circle cx={lastX} cy={lastTempY} r="4" fill="var(--accent-cyan)" />
-              <circle cx={lastX} cy={lastTempY} r="8" fill="var(--accent-cyan)" opacity="0.2">
-                <animate attributeName="r" values="4;12;4" dur="2s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite" />
+              <path d={tempArea} fill="url(#tempAreaGrad)" />
+              <path d={humPath} fill="none" stroke="var(--cyan)"
+                strokeWidth="1.5" strokeOpacity="0.55" strokeDasharray="5 3" />
+              <path d={tempPath} fill="none" stroke="var(--accent)"
+                strokeWidth="2" />
+              {/* Live dot */}
+              <circle cx={lastX} cy={lastTempY} r="3.5" fill="var(--accent)" />
+              <circle cx={lastX} cy={lastTempY} r="7" fill="var(--accent)" opacity="0.15">
+                <animate attributeName="r"       values="3.5;9;3.5" dur="2.5s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.2;0;0.2"  dur="2.5s" repeatCount="indefinite" />
               </circle>
-              <circle cx={lastX} cy={lastHumY} r="3" fill="var(--accent-blue)" />
+              <circle cx={lastX} cy={lastHumY}  r="3" fill="var(--cyan)" />
             </>
           )}
         </svg>
@@ -139,19 +134,19 @@ export default function ChartHistory({ history }) {
       <div className={styles.statsBar}>
         <div className={styles.stat}>
           <span className={styles.statLabel}>Min</span>
-          <span className={styles.statValue} style={{ color: "var(--accent-cyan)" }}>
+          <span className={styles.statValue} style={{ color: "var(--cyan)" }}>
             {min}{hasData ? "°C" : ""}
           </span>
         </div>
         <div className={styles.stat}>
           <span className={styles.statLabel}>Maks</span>
-          <span className={styles.statValue} style={{ color: "var(--accent-orange)" }}>
+          <span className={styles.statValue} style={{ color: "var(--red)" }}>
             {max}{hasData ? "°C" : ""}
           </span>
         </div>
         <div className={styles.stat}>
           <span className={styles.statLabel}>Rata-rata</span>
-          <span className={styles.statValue} style={{ color: "var(--accent-green)" }}>
+          <span className={styles.statValue} style={{ color: "var(--green)" }}>
             {avg}{hasData ? "°C" : ""}
           </span>
         </div>
