@@ -1,6 +1,6 @@
 # ThermoSense — Monitor Suhu IoT ESP32
 
-Dashboard monitoring suhu dan kelembaban real-time yang dibangun dengan **React + Vite**, dirancang untuk diintegrasikan dengan perangkat **ESP32** menggunakan sensor **DHT22**.
+Dashboard monitoring suhu dan kelembaban real-time yang dibangun dengan **React + Vite**, dirancang untuk diintegrasikan dengan perangkat **ESP32** menggunakan sensor **DHT11**.
 
 ---
 
@@ -19,7 +19,7 @@ Dashboard monitoring suhu dan kelembaban real-time yang dibangun dengan **React 
 | CSS Modules | Styling terisolasi per komponen |
 | SVG Native | Gauge & chart dirender tanpa library eksternal |
 | ESP32 (Arduino) | Mikrokontroler sumber data sensor |
-| DHT22 / AM2302 | Sensor suhu dan kelembaban |
+| DHT11 | Sensor suhu dan kelembaban |
 
 ---
 
@@ -89,13 +89,13 @@ npm run preview
 
 ## 🔌 Integrasi ESP32
 
-### Skema Koneksi Sensor DHT22
+### Skema Koneksi Sensor DHT11
 
 ```
-ESP32 Pin    →  DHT22 Pin
+ESP32 Pin    →  DHT11 Pin
 3.3V         →  VCC (Pin 1)
 GPIO 4       →  DATA (Pin 2) [dengan resistor pull-up 10kΩ ke 3.3V]
-GND          →  GND (Pin 4)
+GND          →  GND (Pin 3)
 ```
 
 ### Kode Arduino (ESP32)
@@ -113,7 +113,7 @@ const char* ssid     = "NAMA_WIFI_ANDA";
 const char* password = "PASSWORD_WIFI_ANDA";
 
 #define DHTPIN  4
-#define DHTTYPE DHT22
+#define DHTTYPE DHT11
 
 DHT dht(DHTPIN, DHTTYPE);
 WebServer server(80);
@@ -279,7 +279,7 @@ Semua warna tema tersedia sebagai CSS variables di `App.css`:
 ## Troubleshooting
 
 ### Sensor terbaca `NaN`
-- Pastikan kabel data DHT22 terhubung ke pin yang benar
+- Pastikan kabel data DHT11 terhubung ke pin yang benar
 - Pasang resistor pull-up 10kΩ antara pin DATA dan 3.3V
 - Tunggu 2 detik setelah `dht.begin()` sebelum pembacaan pertama
 
